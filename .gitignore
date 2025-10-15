@@ -6,6 +6,17 @@ __pycache__/
 # C extensions
 *.so
 
+crew2
+
+
+.env
+.DS_Store
+__pycache__
+agent
+.streamlit/secrets.toml
+.venv
+.env
+
 # Distribution / packaging
 .Python
 build/
