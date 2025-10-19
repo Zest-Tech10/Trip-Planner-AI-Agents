@@ -9,11 +9,9 @@ import traceback
 import asyncio
 import nest_asyncio  # ✅ FIX added
 
-nest_asyncio.apply()  # ✅ Allows asyncio.run() inside Streamlit
-
 from langchain_openai import OpenAI
-from langchain_groq import ChatGroq
 
+nest_asyncio.apply()  # ✅ Allows asyncio.run() inside Streamlit
 
 # --------------------------
 # Helper: display emoji
