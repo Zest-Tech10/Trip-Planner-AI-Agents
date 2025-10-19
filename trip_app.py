@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from crewai import Crew, LLM
 # from trip_agents2 import TripAgents, StreamToExpander
@@ -35,11 +36,17 @@ class TripCrew:
         self.date_range = f"{date_range[0].strftime('%Y-%m-%d')} to {date_range[1].strftime('%Y-%m-%d')}"
         self.output_placeholder = st.empty()
 
-        # Get API keys from secrets
-        self.gemini_api_key = st.secrets["GEMINI_API_KEY"]
-        self.openai_api_key = st.secrets["OPENAI_API_KEY"]
-        self.browserless_api_key = st.secrets["BROWSERLESS_API_KEY"]
-        self.serper_api_key = st.secrets["SERPER_API_KEY"]
+        # # Get API keys from secrets
+        # self.gemini_api_key = st.secrets["GEMINI_API_KEY"]
+        # self.openai_api_key = st.secrets["OPENAI_API_KEY"]
+        # self.browserless_api_key = st.secrets["BROWSERLESS_API_KEY"]
+        # self.serper_api_key = st.secrets["SERPER_API_KEY"]
+
+        # Load API keys (Render will inject via Environment Variables)
+        self.gemini_api_key = os.getenv("GEMINI_API_KEY", "")
+        self.openai_api_key = os.getenv("OPENAI_API_KEY", "")
+        self.browserless_api_key = os.getenv("BROWSERLESS_API_KEY", "")
+        self.serper_api_key = os.getenv("SERPER_API_KEY", "")
 
         # Initialize Gemini as the primary model
         self.llm = self.create_llm("gemini")
@@ -132,6 +139,7 @@ class TripCrew:
 # Streamlit UI
 # --------------------------
 if __name__ == "__main__":
+
     icon("🏖️ Trip-Planner-AI-Agents")
 
     st.subheader(
