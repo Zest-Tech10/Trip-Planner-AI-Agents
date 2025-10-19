@@ -1,26 +1,18 @@
-from crewai import Agent, LLM
+
+from crewai import Agent
 import re
 import streamlit as st
 from langchain_core.language_models.chat_models import BaseChatModel
 from crewai import LLM
-from tools.browser_tools import BrowserTools
+from tools.browser_tools2 import BrowserTools
 from tools.calculator_tools import CalculatorTools
 from tools.search_tools import SearchTools
-import os
-
 
 class TripAgents():
     def __init__(self, llm: BaseChatModel = None):
         if llm is None:
-            try:
-                # Primary: Gemini
-                self.llm = LLM(model="gemini/gemini-2.0-flash")
-                
-            except Exception as e:
-                st.warning(f"⚠️ Gemini model unavailable: {e}\nSwitching to GPT-4o fallback...")
-                # Fallback: OpenAI GPT
-                self.llm = LLM(model="gpt-5-mini", api_key=st.secrets["OPENAI_API_KEY"])
-                st.success("✅ Fallback to GPT-4o successful")
+            #self.llm = LLM(model="groq/deepseek-r1-distill-llama-70b")
+            self.llm = LLM(model="gemini/gemini-2.0-flash")
         else:
             self.llm = llm
 
@@ -65,7 +57,11 @@ class TripAgents():
             verbose=True
         )
 
-
+###########################################################################################
+# Print agent process to Streamlit app container                                          #
+# This portion of the code is adapted from @AbubakrChan; thank you!                       #
+# https://github.com/AbubakrChan/crewai-UI-business-product-launch/blob/main/main.py#L210 #
+###########################################################################################
 class StreamToExpander:
     def __init__(self, expander):
         self.expander = expander

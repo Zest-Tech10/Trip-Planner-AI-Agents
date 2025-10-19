@@ -1,6 +1,6 @@
 import streamlit as st
 from crewai import Crew, LLM
-from trip_agents import TripAgents, StreamToExpander
+from trip_agents2 import TripAgents, StreamToExpander
 from trip_tasks import TripTasks
 import datetime
 import sys
@@ -25,12 +25,15 @@ class TripCrew:
         self.output_placeholder = st.empty()
         
         # Access API keys from Streamlit secrets
-        self.gemini_api_key = st.secrets["GEMINI_API_KEY"]
+        # self.gemini_api_key = st.secrets["GEMINI_API_KEY"]
+        self.openai_api_key = st.secrets["OPENAI_API_KEY"]  # 
         self.browserless_api_key = st.secrets["BROWSERLESS_API_KEY"]
         self.serper_api_key = st.secrets["SERPER_API_KEY"]
         
         # Pass the keys to your LLM and agents as needed
-        self.llm = LLM(model="gemini/gemini-2.5-flash")
+        # self.llm = LLM(model="gemini/gemini-2.5-flash")
+        self.llm = LLM(model="gpt-4o", api_key=self.openai_api_key)
+
         # You'll need to update your TripAgents and TripTasks to accept these keys
         # For example, you might modify the agent initialization to pass the keys:
         # self.agents = TripAgents(llm=self.llm, browserless_api_key=self.browserless_api_key, serper_api_key=self.serper_api_key)

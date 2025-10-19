@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from datetime import date, datetime
 from typing import Optional
 from crewai import Crew, LLM
-from trip_agents import TripAgents
+from trip_agents2 import TripAgents
 from trip_tasks import TripTasks
 import os
 from dotenv import load_dotenv

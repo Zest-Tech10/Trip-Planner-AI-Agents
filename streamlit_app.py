@@ -1,6 +1,6 @@
 import streamlit as st
 from crewai import Crew, LLM
-from trip_agents import TripAgents, StreamToExpander
+from trip_agents2 import TripAgents, StreamToExpander
 from trip_tasks import TripTasks
 import datetime
 import sys

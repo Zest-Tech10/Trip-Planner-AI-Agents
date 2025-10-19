@@ -234,6 +234,19 @@ class TripTasks():
                 - Why each attraction, restaurant, or activity is worth including.
                 - Seasonal or cultural events happening during {range}.
 
+
+                9. **💸 Free vs Paid Activities**
+                - Identify which attractions, activities, or experiences are **Free** (no entry fee) and which are **Paid** (require a ticket or cost).  
+                - Mention approximate prices for paid activities where possible.  
+                - Ensure free activities are highlighted as great value experiences.  
+                - Include a concise summary table at the end of the itinerary, for example:  
+
+                    | Type | Attraction | Approx. Cost | Notes |
+                    |------|-------------|---------------|-------|
+                    | Free | Central Park | $0 | Great for morning walks |
+                    | Paid | Louvre Museum | $20 | Skip-the-line tickets recommended |
+
+
                 Your final answer MUST be a **fully fleshed-out travel plan** formatted
                 in **Markdown**, with sections like:
 
@@ -264,5 +277,9 @@ class TripTasks():
             output_key="final_itinerary"
         )
 
+    
+
     def __tip_section(self):
         return "If you do your BEST WORK, I'll tip you $100 and grant you any wish you want!"
+
+

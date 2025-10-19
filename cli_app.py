@@ -1,5 +1,5 @@
 from crewai import Crew, LLM
-from trip_agents import TripAgents
+from trip_agents2 import TripAgents
 from trip_tasks import TripTasks
 from datetime import datetime, timedelta
 import argparse
