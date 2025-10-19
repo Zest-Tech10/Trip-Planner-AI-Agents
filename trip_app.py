@@ -187,8 +187,3 @@ if "submitted" in locals() and submitted:
         st.error("❌ Could not generate trip plan. Please check API keys or try again.")
 
 
-# --------------------------
-# Entry point
-# --------------------------
-if __name__ == "__main__":
-    main()
