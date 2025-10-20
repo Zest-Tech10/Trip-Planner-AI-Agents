@@ -157,6 +157,142 @@ st.set_page_config(
 # ------------------------------------------------
 # ENHANCED DARK THEME CSS
 # ------------------------------------------------
+# st.markdown("""
+#     <style>
+#     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+#     /* 🌙 APP BACKGROUND + FONT */
+#     .stApp {
+#         background: linear-gradient(135deg, #0D0D0D, #1C1C1C, #2A2A2A);
+#         color: #F0F0F0;
+#         font-family: 'Inter', sans-serif;
+#     }
+
+#     /* 🏷️ TITLES */
+#     .main-title {
+#         font-size: 3rem;
+#         font-weight: 800;
+#         text-align: center;
+#         background: linear-gradient(90deg, #00CBA8, #00A3FF);
+#         -webkit-background-clip: text;
+#         -webkit-text-fill-color: transparent;
+#         text-shadow: 0px 0px 15px rgba(0, 163, 255, 0.4);
+#         margin-bottom: 0.5rem;
+#     }
+#     .subtitle {
+#         text-align: center;
+#         color: #A0A0A0;
+#         font-size: 1.2rem;
+#         font-weight: 300;
+#         margin-bottom: 3rem;
+#     }
+
+#     /* 📚 SIDEBAR STYLING */
+#     section[data-testid="stSidebar"] {
+#         background: rgba(18, 18, 18, 0.95);
+#         border-right: 2px solid #00CBA8;
+#         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+#         color: #EDEDED;
+#     }
+#     .sidebar-header {
+#         font-size: 1.4rem;
+#         font-weight: 700;
+#         color: #00CBA8;
+#         padding-top: 1rem;
+#         padding-bottom: 1rem;
+#         text-transform: uppercase;
+#         letter-spacing: 1px;
+#     }
+
+#     /* 🎛️ SIDEBAR TOGGLE */
+#     button[data-testid="baseButton-headerNoPadding"] {
+#         color: #00FF99 !important;
+#         opacity: 1 !important;
+#         background: rgba(0, 255, 153, 0.12) !important;
+#         border: 1px solid #00FF99 !important;
+#         border-radius: 50% !important;
+#         width: 38px !important;
+#         height: 38px !important;
+#         display: flex !important;
+#         align-items: center !important;
+#         justify-content: center !important;
+#         box-shadow: 0 0 10px rgba(0, 255, 153, 0.4) !important;
+#         transition: all 0.3s ease-in-out !important;
+#         z-index: 10000 !important;
+#     }
+#     button[data-testid="baseButton-headerNoPadding"]:hover {
+#         color: #00FFB7 !important;
+#         background: rgba(0, 255, 183, 0.25) !important;
+#         box-shadow: 0 0 15px rgba(0, 255, 183, 0.7) !important;
+#         transform: scale(1.2);
+#     }
+#     header[data-testid="stHeader"] {
+#         background: transparent !important;
+#         z-index: 10000 !important;
+#     }
+
+#     /* ✏️ INPUT FIELDS */
+#     .stTextInput input, .stDateInput input, .stTextArea textarea {
+#         background-color: #242424 !important;
+#         color: #F0F0F0 !important;
+#         border-radius: 10px;
+#         border: 1px solid #444444;
+#         padding: 0.8rem 1rem;
+#     }
+#     .stTextInput input::placeholder, .stTextArea textarea::placeholder, .stDateInput input::placeholder {
+#         color: #00CBA8 !important;
+#         opacity: 0.8;
+#     }
+#     .stTextInput label, .stTextArea label, .stDateInput label {
+#         color: #CCCCCC !important;
+#         font-weight: 600;
+#         margin-bottom: 0.25rem;
+#     }
+
+#     /* 🔘 BUTTON STYLING */
+#     div.stButton > button {
+#         width: 100%;
+#         background: linear-gradient(45deg, #00CBA8, #00A3FF) !important;
+#         color: #FFFFFF !important;
+#         border: none !important;
+#         border-radius: 12px !important;
+#         font-weight: 700 !important;
+#         font-size: 1.1rem !important;
+#         padding: 0.8rem !important;
+#         text-align: center !important;
+#         transition: all 0.4s ease !important;
+#         box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3) !important;
+#         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+#         cursor: pointer !important;
+#     }
+#     div.stButton > button:hover, div.stButton > button:focus {
+#         transform: translateY(-3px) scale(1.02);
+#         background: linear-gradient(45deg, #00E0B8, #00B0FF) !important;
+#         box-shadow: 0 8px 25px rgba(0, 163, 255, 0.6) !important;
+#     }
+
+#     /* 📦 EXPANDERS */
+#     .stExpander {
+#         background: rgba(255, 255, 255, 0.08) !important;
+#         border-radius: 12px !important;
+#         border: 1px solid rgba(0, 163, 255, 0.2) !important;
+#         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+#         padding: 1rem;
+#     }
+
+#     /* ⚙️ FOOTER */
+#     .footer {
+#         text-align: center;
+#         font-size: 0.85rem;
+#         color: #888888;
+#         padding-top: 2rem;
+#     }
+#     </style>
+# """, unsafe_allow_html=True)
+
+
+
+
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -187,7 +323,7 @@ st.markdown("""
         margin-bottom: 3rem;
     }
 
-    /* 📚 SIDEBAR STYLING */
+    /* 📚 SIDEBAR */
     section[data-testid="stSidebar"] {
         background: rgba(18, 18, 18, 0.95);
         border-right: 2px solid #00CBA8;
@@ -207,7 +343,6 @@ st.markdown("""
     /* 🎛️ SIDEBAR TOGGLE */
     button[data-testid="baseButton-headerNoPadding"] {
         color: #00FF99 !important;
-        opacity: 1 !important;
         background: rgba(0, 255, 153, 0.12) !important;
         border: 1px solid #00FF99 !important;
         border-radius: 50% !important;
@@ -216,19 +351,13 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 0 10px rgba(0, 255, 153, 0.4) !important;
         transition: all 0.3s ease-in-out !important;
         z-index: 10000 !important;
     }
-    button[data-testid="baseButton-headerNoPadding"]:hover {
-        color: #00FFB7 !important;
+    button[data-testid="baseButton-headerNoPadding"]:hover,
+    button[data-testid="baseButton-headerNoPadding"]:active {
         background: rgba(0, 255, 183, 0.25) !important;
-        box-shadow: 0 0 15px rgba(0, 255, 183, 0.7) !important;
-        transform: scale(1.2);
-    }
-    header[data-testid="stHeader"] {
-        background: transparent !important;
-        z-index: 10000 !important;
+        transform: scale(1.2) !important;
     }
 
     /* ✏️ INPUT FIELDS */
@@ -249,9 +378,18 @@ st.markdown("""
         margin-bottom: 0.25rem;
     }
 
-    /* 🔘 BUTTON STYLING */
+    /* 🔘 BUTTONS - CENTERED & TAP-FRIENDLY */
+    div.stButton {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin: 1rem 0;
+    }
     div.stButton > button {
-        width: 100%;
+        width: 80% !important;
+        max-width: 300px !important;
+        min-width: 180px !important;
         background: linear-gradient(45deg, #00CBA8, #00A3FF) !important;
         color: #FFFFFF !important;
         border: none !important;
@@ -260,15 +398,17 @@ st.markdown("""
         font-size: 1.1rem !important;
         padding: 0.8rem !important;
         text-align: center !important;
-        transition: all 0.4s ease !important;
-        box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3) !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+        transition: all 0.3s ease !important;
         cursor: pointer !important;
+        /* Replace hover shadow with active shadow for mobile tap */
+        box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3) !important;
     }
-    div.stButton > button:hover, div.stButton > button:focus {
-        transform: translateY(-3px) scale(1.02);
+    div.stButton > button:hover, 
+    div.stButton > button:focus,
+    div.stButton > button:active {
+        transform: translateY(-2px) scale(1.02);
         background: linear-gradient(45deg, #00E0B8, #00B0FF) !important;
-        box-shadow: 0 8px 25px rgba(0, 163, 255, 0.6) !important;
+        box-shadow: 0 6px 20px rgba(0, 163, 255, 0.5) !important;
     }
 
     /* 📦 EXPANDERS */
@@ -287,8 +427,21 @@ st.markdown("""
         color: #888888;
         padding-top: 2rem;
     }
+
+    /* 🌐 MEDIA QUERIES - FULL RESPONSIVE */
+    @media (max-width: 768px) {
+        .main-title { font-size: 2.2rem; }
+        .subtitle { font-size: 1rem; }
+        div.stButton > button { width: 90% !important; font-size: 1rem !important; }
+    }
+    @media (max-width: 480px) {
+        .main-title { font-size: 1.8rem; }
+        .subtitle { font-size: 0.9rem; }
+        div.stButton > button { width: 95% !important; font-size: 0.95rem !important; }
+    }
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
 
 
 # ------------------------------------------------
@@ -360,8 +513,63 @@ if __name__ == "__main__":
     # ------------------------------------------------
     # FOOTER
     # ------------------------------------------------
-    st.markdown("<div class='footer'>🚀 Powered by AI Agents | Designed with ❤️ using Streamlit & Inter Font</div>", unsafe_allow_html=True)
+    # st.markdown("<div class='footer'>✨ Curating Futuristic Expeditions with AI-Orchestrated Precision 🌏 |🛸 Guided by Autonomous AI Navigators ⧫✨</div>", unsafe_allow_html=True)
 
+    
+
+    st.markdown("""
+    <div class="marquee-container">
+        <div class="marquee-content">
+            ✨⛩️💫 Crafting Futuristic Journeys with AI Precision 🌏 | 🛸 Autonomously Guided by AI ⧫✨
+           
+        </div>
+    </div>
+
+    <style>
+    /* Container hides overflow */
+    .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 30px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Content scrolls continuously */
+    .marquee-content {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marqueeAnim 15s linear infinite;
+        /* Gradient text */
+        background: linear-gradient(90deg, #FFD700, #00FFFF, #FF69B4, #7FFF00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text; /* Firefox support */
+        color: transparent;
+    }
+
+    /* Keyframes for continuous scroll */
+    @keyframes marqueeAnim {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-50%); } /* Scrolls half content, because text repeated */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .marquee-content {
+            font-size: 13px;
+            animation-duration: 15s;
+        }
+    }
+    @media (max-width: 480px) {
+        .marquee-content {
+            font-size: 12px;
+            animation-duration: 12s;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 
 # it work perfectly fine now
