@@ -9,19 +9,40 @@ import sys
 import traceback
 import asyncio
 import nest_asyncio  # ✅ FIX added
-
 from langchain_openai import OpenAI
 
-nest_asyncio.apply()  # ✅ Allows asyncio.run() inside Streamlit
+# ✅ Enables asyncio.run() inside Streamlit
+nest_asyncio.apply()
+
 
 # --------------------------
 # Helper: display emoji
 # --------------------------
-def icon(emoji: str):
-    """Shows an emoji as a Notion-style page icon."""
-    st.write(
-        f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
-        unsafe_allow_html=True,
+def icon(emoji: str = "🌍"):
+    """Shows a simple colorful agent-style emoji icon."""
+    st.markdown(
+        f"""
+        <div style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00A3FF, #00CBA8);
+            box-shadow: 0 4px 20px rgba(0, 163, 255, 0.25);
+            margin: 15px auto;
+        ">
+            <span style="
+                font-size: 70px;
+                line-height: 1;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+            ">
+                {emoji}
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 
@@ -47,6 +68,7 @@ class TripCrew:
         self.openai_api_key = os.getenv("OPENAI_API_KEY", "")
         self.browserless_api_key = os.getenv("BROWSERLESS_API_KEY", "")
         self.serper_api_key = os.getenv("SERPER_API_KEY", "")
+
 
         # Initialize Gemini as the primary model
         self.llm = self.create_llm("gemini")
@@ -77,36 +99,24 @@ class TripCrew:
         travel_concierge_agent = agents.travel_concierge()
 
         identify_task = tasks.identify_task(
-            city_selector_agent,
-            self.origin,
-            self.cities,
-            self.interests,
-            self.date_range,
+            city_selector_agent, self.origin, self.cities, self.interests, self.date_range,
         )
 
         gather_task = tasks.gather_task(
-            local_expert_agent,
-            self.origin,
-            self.interests,
-            self.date_range,
+            local_expert_agent, self.origin, self.interests, self.date_range,
         )
 
         plan_task = tasks.plan_task(
-            travel_concierge_agent,
-            self.origin,
-            self.interests,
-            self.date_range,
+            travel_concierge_agent, self.origin, self.interests, self.date_range,
         )
 
         crew = Crew(
             agents=[city_selector_agent, local_expert_agent, travel_concierge_agent],
             tasks=[identify_task, gather_task, plan_task],
             verbose=True,
- 
         )
 
         result = crew.kickoff()
-    
         return result
 
     def run(self):
@@ -116,7 +126,6 @@ class TripCrew:
             result = asyncio.run(self.try_run_with_llm(self.llm))
             self.output_placeholder.markdown(result)
             return result
-
         except Exception as gemini_error:
             st.warning(f"⚠️ Gemini failed: {str(gemini_error)}")
             traceback.print_exc()
@@ -128,70 +137,231 @@ class TripCrew:
                 st.success("✅ Successfully continued with OpenAI fallback.")
                 self.output_placeholder.markdown(result)
                 return result
-
             except Exception as openai_error:
                 st.error(f"❌ Both Gemini and OpenAI failed.\n{openai_error}")
                 traceback.print_exc()
                 return None
 
 
-# --------------------------
-# Streamlit UI
-# --------------------------
+# ------------------------------------------------
+# PAGE CONFIGURATION
+# ------------------------------------------------
+st.set_page_config(
+    page_title="✈️ Agent-Powered Trip Planner",
+    page_icon="🌍",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
+# ------------------------------------------------
+# ENHANCED DARK THEME CSS
+# ------------------------------------------------
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+    /* 🌙 APP BACKGROUND + FONT */
+    .stApp {
+        background: linear-gradient(135deg, #0D0D0D, #1C1C1C, #2A2A2A);
+        color: #F0F0F0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* 🏷️ TITLES */
+    .main-title {
+        font-size: 3rem;
+        font-weight: 800;
+        text-align: center;
+        background: linear-gradient(90deg, #00CBA8, #00A3FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0px 0px 15px rgba(0, 163, 255, 0.4);
+        margin-bottom: 0.5rem;
+    }
+    .subtitle {
+        text-align: center;
+        color: #A0A0A0;
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-bottom: 3rem;
+    }
+
+    /* 📚 SIDEBAR STYLING */
+    section[data-testid="stSidebar"] {
+        background: rgba(18, 18, 18, 0.95);
+        border-right: 2px solid #00CBA8;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        color: #EDEDED;
+    }
+    .sidebar-header {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #00CBA8;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* 🎛️ SIDEBAR TOGGLE */
+    button[data-testid="baseButton-headerNoPadding"] {
+        color: #00FF99 !important;
+        opacity: 1 !important;
+        background: rgba(0, 255, 153, 0.12) !important;
+        border: 1px solid #00FF99 !important;
+        border-radius: 50% !important;
+        width: 38px !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 0 10px rgba(0, 255, 153, 0.4) !important;
+        transition: all 0.3s ease-in-out !important;
+        z-index: 10000 !important;
+    }
+    button[data-testid="baseButton-headerNoPadding"]:hover {
+        color: #00FFB7 !important;
+        background: rgba(0, 255, 183, 0.25) !important;
+        box-shadow: 0 0 15px rgba(0, 255, 183, 0.7) !important;
+        transform: scale(1.2);
+    }
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        z-index: 10000 !important;
+    }
+
+    /* ✏️ INPUT FIELDS */
+    .stTextInput input, .stDateInput input, .stTextArea textarea {
+        background-color: #242424 !important;
+        color: #F0F0F0 !important;
+        border-radius: 10px;
+        border: 1px solid #444444;
+        padding: 0.8rem 1rem;
+    }
+    .stTextInput input::placeholder, .stTextArea textarea::placeholder, .stDateInput input::placeholder {
+        color: #00CBA8 !important;
+        opacity: 0.8;
+    }
+    .stTextInput label, .stTextArea label, .stDateInput label {
+        color: #CCCCCC !important;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    /* 🔘 BUTTON STYLING */
+    div.stButton > button {
+        width: 100%;
+        background: linear-gradient(45deg, #00CBA8, #00A3FF) !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
+        padding: 0.8rem !important;
+        text-align: center !important;
+        transition: all 0.4s ease !important;
+        box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3) !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+        cursor: pointer !important;
+    }
+    div.stButton > button:hover, div.stButton > button:focus {
+        transform: translateY(-3px) scale(1.02);
+        background: linear-gradient(45deg, #00E0B8, #00B0FF) !important;
+        box-shadow: 0 8px 25px rgba(0, 163, 255, 0.6) !important;
+    }
+
+    /* 📦 EXPANDERS */
+    .stExpander {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(0, 163, 255, 0.2) !important;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+    }
+
+    /* ⚙️ FOOTER */
+    .footer {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #888888;
+        padding-top: 2rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+# ------------------------------------------------
+# MAIN UI
+# ------------------------------------------------
 if __name__ == "__main__":
-
-    icon("🏖️ Trip-Planner-AI-Agents")
-
-    st.subheader(
-        "Let AI agents plan your next vacation!",
-        divider="rainbow",
-        anchor=False,
-    )
+    st.markdown("<div class='main-title'>⛩️💫 Infinity Odyssey Voyager ∇⩥</div>", unsafe_allow_html=True)
+    st.markdown("<div class='subtitle'>✨ Navigate Global Adventures with Futuristic AI Insight ⛢</div>", unsafe_allow_html=True)
+    st.divider()
 
     today = datetime.datetime.now().date()
     next_year = today.year + 1
-    jan_16_next_year = datetime.date(next_year, 1, 10)
+    jan_10_next_year = datetime.date(next_year, 1, 10)
 
-    with st.sidebar:
-        st.header("👇 Enter your trip details")
-        with st.form("my_form"):
-            location = st.text_input(
-                "Where are you currently located?", placeholder="Kuala Lumpur, Malaysia"
-            )
-            cities = st.text_input(
-                "City and country are you interested in vacationing at?",
-                placeholder="Rome, Italy",
-            )
-            date_range = st.date_input(
-                "Date range you are interested in traveling?",
+    # Sidebar Form
+    st.markdown("<div class='sidebar-header'>Plan Your Adventure</div>", unsafe_allow_html=True)
+    with st.form("trip_form"):
+        location = st.text_input("📍 Where are you currently located?", placeholder="Kuala Lumpur, Malaysia")
+        cities = st.text_input("🌆 Destination (City & Country)", placeholder="Rome, Italy")
+
+        # ✅ Two-Column Date Range Picker
+        col1, col2 = st.columns(2)
+        with col1:
+            start_date = st.date_input(
+                "📅 Start Date",
                 min_value=today,
-                value=(today, jan_16_next_year + datetime.timedelta(days=6)),
+                value=today,
                 format="MM/DD/YYYY",
+                key="start_date"
             )
-            interests = st.text_area(
-                "High level interests and hobbies or extra details about your trip?",
-                placeholder="2 adults who love swimming, dancing, hiking, and eating",
+        with col2:
+            end_date = st.date_input(
+                "🏁 End Date",
+                min_value=start_date,
+                value=start_date + datetime.timedelta(days=6),
+                format="MM/DD/YYYY",
+                key="end_date"
             )
+        # Combine into tuple for TripCrew
+        date_range = (start_date, end_date)
 
-            submitted = st.form_submit_button("Submit")
+        interests = st.text_area(
+            "🎯 High-level interests or trip details",
+            placeholder="Visiting Paris for 7 days. We love swimming, dancing, hiking, trying local food, and exploring art museums. Looking for a mix of adventure and relaxation."
+        )
 
-        st.divider()
+        submitted = st.form_submit_button("✨ Generate My Trip Plan")
 
-# --------------------------
-# Run trip planner after submission
-# --------------------------
-if "submitted" in locals() and submitted:
-    with st.status("🤖 **Agents at work...**", state="running", expanded=True) as status:
-        with st.container(height=500, border=False):
-            sys.stdout = StreamToExpander(st)
-            trip_crew = TripCrew(location, cities, date_range, interests)
-            result = trip_crew.run()
-        status.update(label="✅ Trip Plan Ready!", state="complete", expanded=False)
+    st.divider()
 
-    if result:
-        st.subheader("Here is your Trip Plan", anchor=False, divider="rainbow")
-        st.markdown(result)
-    else:
-        st.error("❌ Could not generate trip plan. Please check API keys or try again.")
+    # ------------------------------------------------
+    # RUN TRIP PLANNER
+    # ------------------------------------------------
+    if "submitted" in locals() and submitted:
+        with st.status("🤖 **Agents at work...**", state="running", expanded=True) as status:
+            with st.container(height=500, border=False):
+                sys.stdout = StreamToExpander(st)
+                trip_crew = TripCrew(location, cities, date_range, interests)
+                result = trip_crew.run()
+            status.update(label="✅ Trip Plan Ready!", state="complete", expanded=False)
+
+        if result:
+            st.subheader("🌍 Here’s your Dream Trip Plan", anchor=False, divider="rainbow")
+            st.markdown(result)
+            st.success("🌟 Trip plan generated successfully!", icon="✅")
+        else:
+            st.error("❌ Could not generate trip plan. Please check API keys or try again.")
+
+    # ------------------------------------------------
+    # FOOTER
+    # ------------------------------------------------
+    st.markdown("<div class='footer'>🚀 Powered by AI Agents | Designed with ❤️ using Streamlit & Inter Font</div>", unsafe_allow_html=True)
 
 
+
+# it work perfectly fine now

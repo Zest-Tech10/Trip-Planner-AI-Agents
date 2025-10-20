@@ -19,7 +19,7 @@ class TripAgents():
             except Exception as e:
                 st.warning(f"⚠️ Gemini model unavailable: {e}\nSwitching to GPT-4o fallback...")
                 # Fallback: OpenAI GPT
-                self.llm = LLM(model="gpt-5-mini", api_key=st.secrets["OPENAI_API_KEY"])
+                self.llm = LLM(model="gpt-5-mini", api_key=os.getenv("OPENAI_API_KEY"))
                 st.success("✅ Fallback to GPT-4o successful")
         else:
             self.llm = llm

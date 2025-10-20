@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 import streamlit as st
@@ -19,7 +20,8 @@ class BrowserTools(BaseTool):
 
     def _run(self, website: str) -> str:
         try:
-            url = f"https://chrome.browserless.io/content?token={st.secrets['BROWSERLESS_API_KEY']}"
+            # url = f"https://chrome.browserless.io/content?token={st.secrets['BROWSERLESS_API_KEY']}"
+            url = f"https://chrome.browserless.io/content?token={os.getenv('BROWSERLESS_API_KEY')}"
             payload = json.dumps({"url": website})
             headers = {'cache-control': 'no-cache', 'content-type': 'application/json'}
             response = requests.request("POST", url, headers=headers, data=payload)
@@ -43,7 +45,7 @@ class BrowserTools(BaseTool):
                 st.warning(f"⚠️ Gemini failed: {e}\nSwitching to GPT-4o-mini fallback...")
                 llm = LLM(
                     model="gpt-5-mini",
-                    api_key=st.secrets["OPENAI_API_KEY"]
+                    api_key=os.getenv("OPENAI_API_KEY")
                 )
                 st.success("✅ Fallback to GPT-5-mini successful")
             
