@@ -1,1 +1,1 @@
-web: python -m streamlit run trip_app.py --server.port $PORT --server.address 0.0.0.0
+web: web: uvicorn Trip_Final:app --host 0.0.0.0 --port $PORT
