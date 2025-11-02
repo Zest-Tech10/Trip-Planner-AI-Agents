@@ -1,4 +1,6 @@
+# Core AI libraries
 crewai
+crewai[google-genai]
 openai>=1.6.1
 unstructured>=0.11.0
 pyowm>=3.3.0
@@ -7,12 +9,20 @@ langchain-community
 langchain-core
 tools>=0.1.9
 
+# Web framework
 fastapi>=0.109.0
 uvicorn>=0.27.0
 
+# Utilities
 requests>=2.31.0
 pydantic>=2.10
 python-dotenv>=1.0.0
-langchain-openai>=0.0.5
 nest_asyncio
+
+# Langchain integrations
+langchain-openai>=0.0.5
+
+# Google Generative AI (optional, if used separately)
 google-generativeai
+
+
